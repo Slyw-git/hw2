@@ -78,21 +78,221 @@
 # Delete existing data, so you'll start fresh each time this script is run.
 # Use `Model.destroy_all` code.
 # TODO!
+Role.destroy_all
+Movie.destroy_all
+Actor.destroy_all
+Studio.destroy_all
+Agent.destroy_all
 
 # Generate models and tables, according to the domain model.
 # TODO!
+# created models and tables in terminal and migrated 
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
+# Agent model 
+new_agent = Agent.new
+new_agent.name = "Ari Emanuel"
+new_agent.save
+
+#Studio model
+new_studio = Studio.new
+new_studio.name = "Warner Bros."
+new_studio.save
+
+#Movie entry 1 
+batman_begins = Movie.new
+batman_begins.title = "Batman Begins"
+batman_begins.year_released = 2005
+batman_begins.rated = "PG-13"
+batman_begins.studio_id = new_studio.id
+batman_begins.save
+#Movie entry 2 
+dark_knight = Movie.new
+dark_knight.title = "The Dark Knight"
+dark_knight.year_released = 2008
+dark_knight.rated = "PG-13"
+dark_knight.studio_id = new_studio.id
+dark_knight.save
+
+#Movie entry 3 
+dark_knight_rises = Movie.new
+dark_knight_rises.title = "The Dark Knight Rises"
+dark_knight_rises.year_released = 2012
+dark_knight_rises.rated = "PG-13"
+dark_knight_rises.studio_id = new_studio.id
+dark_knight_rises.save
+
+#Actor 1-11
+ari_emanuel = Agent.find_by({ "name" => "Ari Emanuel" })
+
+actor = Actor.new
+actor.name = "Christian Bale"
+actor.agent_id = ari_emanuel.id
+actor.save
+
+actor = Actor.new
+actor.name = "Michael Caine"
+actor.save
+
+actor = Actor.new
+actor.name = "Liam Neeson"
+actor.save
+
+actor = Actor.new
+actor.name = "Katie Holmes"
+actor.save
+
+actor = Actor.new
+actor.name = "Gary Oldman"
+actor.save
+
+actor = Actor.new
+actor.name = "Heath Ledger"
+actor.save
+
+actor = Actor.new
+actor.name = "Aaron Eckhart"
+actor.save
+
+actor = Actor.new
+actor.name = "Maggie Gyllenhaal"
+actor.save
+
+actor = Actor.new
+actor.name = "Tom Hardy"
+actor.save
+
+actor = Actor.new
+actor.name = "Joseph Gordon-Levitt"
+actor.save
+
+actor = Actor.new
+actor.name = "Anne Hathaway"
+actor.save
+
+#Roles entry
+bb = Movie.find_by({ "title" => "Batman Begins" })
+cb = Actor.find_by({ "name" => "Christian Bale" })
+role = Role.new
+role.character_name = "Bruce Wayne"
+role.movie_id = bb.id
+role.actor_id = cb.id
+role.save
+
+mc = Actor.find_by({ "name" => "Michael Caine" })
+role = Role.new
+role.character_name = "Alfred"
+role.movie_id = bb.id
+role.actor_id = mc.id
+role.save
+
+ln = Actor.find_by({ "name" => "Liam Neeson" })
+role = Role.new
+role.character_name = "Ra's Al Ghul"
+role.movie_id = bb.id
+role.actor_id = ln.id
+role.save
+
+kh = Actor.find_by({ "name" => "Katie Holmes" })
+role = Role.new
+role.character_name = "Rachel Dawes"
+role.movie_id = bb.id
+role.actor_id = kh.id
+role.save
+
+
+go = Actor.find_by({ "name" => "Gary Oldman" })
+role = Role.new
+role.character_name = "Commissioner Gordon"
+role.movie_id = bb.id
+role.actor_id = go.id
+role.save
+
+
+dk = Movie.find_by({ "title" => "The Dark Knight" })
+
+role = Role.new
+role.character_name = "Bruce Wayne"
+role.movie_id = dk.id
+role.actor_id = cb.id
+role.save
+
+hl = Actor.find_by({ "name" => "Heath Ledger" })
+role = Role.new
+role.character_name = "Joker"
+role.movie_id = dk.id
+role.actor_id = hl.id
+role.save
+
+ae = Actor.find_by({ "name" => "Aaron Eckhart" })
+role = Role.new
+role.character_name = "Harvey Dent"
+role.movie_id = dk.id
+role.actor_id = ae.id
+role.save
+
+role = Role.new
+role.character_name = "Alfred"
+role.movie_id = dk.id
+role.actor_id = mc.id
+role.save
+
+mg = Actor.find_by({ "name" => "Maggie Gyllenhaal" })
+role = Role.new
+role.character_name = "Rachel Dawes"
+role.movie_id = dk.id
+role.actor_id = mg.id
+role.save
+
+dkr = Movie.find_by({ "title" => "The Dark Knight Rises" })
+
+role = Role.new
+role.character_name = "Bruce Wayne"
+role.movie_id = dkr.id
+role.actor_id = cb.id
+role.save
+
+role = Role.new
+role.character_name = "Commissioner Gordon"
+role.movie_id = dkr.id
+role.actor_id = go.id
+role.save
+
+th = Actor.find_by({ "name" => "Tom Hardy" })
+role = Role.new
+role.character_name = "Bane"
+role.movie_id = dkr.id
+role.actor_id = th.id
+role.save
+
+jgl = Actor.find_by({ "name" => "Joseph Gordon-Levitt" })
+role = Role.new
+role.character_name = "John Blake"
+role.movie_id = dkr.id
+role.actor_id = jgl.id
+role.save
+
+ah = Actor.find_by({ "name" => "Anne Hathaway" })
+role = Role.new
+role.character_name = "Selina Kyle"
+role.movie_id = dkr.id
+role.actor_id = ah.id
+role.save
 
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
 puts ""
 
+
 # Query the movies data and loop through the results to display the movies output.
-# TODO!
+movies = Movie.all
+for movie in movies
+  studio = Studio.find_by({ "id" => movie.studio_id })
+  puts "#{movie.title.ljust(23)}#{movie.year_released.to_s.ljust(15)}#{movie.rated.ljust(7)}#{studio.name}"
+end
 
 # Prints a header for the cast output
 puts ""
@@ -100,8 +300,15 @@ puts "Top Cast"
 puts "========"
 puts ""
 
+
+
 # Query the cast data and loop through the results to display the cast output for each movie.
-# TODO!
+roles = Role.all
+for role in roles
+  movie = Movie.find_by({ "id" => role.movie_id })
+  actor = Actor.find_by({ "id" => role.actor_id })
+  puts "#{movie.title.ljust(23)}#{actor.name.ljust(22)}#{role.character_name}"
+end
 
 # Prints a header for the agent's list of represented actors output
 puts ""
@@ -109,5 +316,8 @@ puts "Represented by agent"
 puts "===================="
 puts ""
 
-# Query the actor data and loop through the results to display the agent's list of represented actors output.
-# TODO!
+agent = Agent.find_by({ "name" => "Ari Emanuel" })
+represented_actors = Actor.where({ "agent_id" => agent.id })
+for actor in represented_actors
+  puts actor.name
+end
